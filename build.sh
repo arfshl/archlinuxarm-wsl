@@ -18,7 +18,7 @@ mount --bind /sys "./dump/sys"
 #chroot "./dump" useradd -r -s /usr/bin/nologin -d /var/lib/pacman alpm
 chroot "./dump" pacman-key --init
 chroot "./dump" pacman-key --populate archlinuxarm
-chroot "./dump" pacman -Rnsc --noconfirm linux-$ARCH linux-firmware
+chroot "./dump" pacman -Rnsc --noconfirm linux-aarch64 linux-firmware
 chroot "./dump" pacman -Syu --noconfirm
 chroot "./dump" pacman -Sy --noconfirm ca-certificates sudo dbus systemd mesa-utils
 chroot "./dump" rm -f /var/cache/pacman/pkg/*

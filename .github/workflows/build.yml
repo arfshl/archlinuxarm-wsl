@@ -1,0 +1,49 @@
+name: "Build latest"
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 0"
+  push:
+    branches:
+      - 'main'
+    paths:
+      - "build.sh"
+      - ".github/workflows/build.yml"
+      - "wslconf/*"
+
+permissions:
+  contents: write  
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04-arm
+    outputs:
+      RELEASE: ${{ steps.start_build.outputs.RELEASE }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - id: start_build
+        run: |
+          bash build.sh
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: archlinuxarm
+          archive: false
+          path: |
+             archlinuxarm.wsl
+
+      - name: Release latest
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.start_build.outputs.RELEASE }}
+          name: ${{ steps.start_build.outputs.RELEASE }}
+          files: |
+            archlinuxarm.wsl
+          preserve_order: true
+          make_latest: true
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

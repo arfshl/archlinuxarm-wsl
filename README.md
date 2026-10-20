@@ -5,7 +5,7 @@
 ### [Download](https://github.com/arfshl/archlinuxarm-wsl/releases)
 
 ## Requirements
-* xaarch64 based processors
+* aarch64 based processors
 * Windows Subsystem for Linux feature is enabled.
 
 ## Install
@@ -15,6 +15,6 @@
 
 #### 3. Or install from elevated cmd to customize the name
 
-     wsl --install --from-file <path>/ubuntu-latest-amd64.wsl  --name <machine-name>
+     wsl --install --from-file <path>/archlinuxarm.wsl  --name <machine-name>
 
 
